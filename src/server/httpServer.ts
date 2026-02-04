@@ -4,6 +4,7 @@ import { registerErrorHandler } from './middleware/errorHandler';
 import { logger } from '../shared/logger';
 import { explainConceptTool } from '../mcp/tools/explainConceptTool';
 import { registerTool } from '../mcp/toolRegistry';
+import { nextTopicTool } from '../mcp/tools/nextTopic.tool';
 
 /**
  * HTTP entrypoint for the tutor server.
@@ -41,11 +42,9 @@ async function main() {
 
   /**
    * Register all MCP tools.
-   *
-   * Today we register a single tool to keep the project approachable.
-   * When you add more tools, register them here (or create a helper that registers all tools).
    */
   registerTool(explainConceptTool);
+  registerTool(nextTopicTool);
 
   await app.listen({ port: PORT, host: HOST });
   logger.info(`Server listening on http://${HOST}:${PORT}`);

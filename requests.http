@@ -57,6 +57,34 @@ Content-Type: application/json
   }
 }
 
+### Next Topic - Fullstack
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "next_topic",
+  "input": {
+    "track": "fullstack"
+  },
+  "userContext": {
+    "previousTopics": []
+  }
+}
+
+### Next Topic - Pretend they already covered a few topics
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "next_topic",
+  "input": {
+    "track": "fullstack"
+  },
+  "userContext": {
+     "previousTopics": ["internet_basics","http_basics","git_basics"]
+  }
+}
+
 ### Test Invalid Tool Name
 POST {{baseUrl}}/mcp
 Content-Type: application/json

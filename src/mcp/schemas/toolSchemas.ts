@@ -18,6 +18,21 @@ export const explainConceptInputSchema = z.object({
 });
 
 /**
+ * Schema for `next_topic` tool input.
+ *
+ * Learners can specify:
+ * - `track`: which learning track to follow (defaults to 'fullstack')
+ * - `currentTopic`: optional topic they just finished (to mark as completed)
+ *
+ * This lets the curriculum system pick the next appropriate topic based on
+ * prerequisites and progress.
+ */
+export const nextTopicInputSchema = z.object({
+  track: z.enum(['foundation', 'frontend', 'backend', 'fullstack']).optional(),
+  currentTopic: z.string().optional(),
+});
+
+/**
  * Registry of all tool input schemas.
  *
  * Add a new tool? Register its schema here.
@@ -25,6 +40,7 @@ export const explainConceptInputSchema = z.object({
  */
 export const toolInputSchemas = {
   explain_concept: explainConceptInputSchema,
+  next_topic: nextTopicInputSchema,
 } as const;
 
 /**
