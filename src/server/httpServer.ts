@@ -2,10 +2,30 @@ import Fastify from 'fastify';
 import { registerRoutes } from './routes';
 import { registerErrorHandler } from './middleware/errorHandler';
 import { logger } from '../shared/logger';
+import { explainConceptTool } from '../mcp/tools/explainConcept.tool';
+import { registerTool } from '../mcp/toolRegistry';
+
+/**
+ * HTTP entrypoint for the tutor server.
+ *
+ * This service exposes two simple endpoints:
+ * - `GET /health` for uptime checks
+ * - `POST /mcp` to route requests to an in-process MCP-style tool registry
+ *
+ * Warm note: this file is intentionally small and readable. As you add tools,
+ * prefer keeping wiring/bootstrapping here and putting “real work” in `src/mcp/**`.
+ */
 
 const PORT = Number(process.env.PORT ?? 3333);
 const HOST = process.env.HOST ?? '127.0.0.1';
 
+/**
+ * Boots the Fastify server and registers routes/tools.
+ *
+ * Environment variables:
+ * - `PORT` (default `3333`)
+ * - `HOST` (default `127.0.0.1`)
+ */
 async function main() {
   const app = Fastify({
     logger: false, // using our own logger for now
@@ -18,6 +38,14 @@ async function main() {
 
   registerErrorHandler(app);
   await registerRoutes(app);
+
+  /**
+   * Register all MCP tools.
+   *
+   * Today we register a single tool to keep the project approachable.
+   * When you add more tools, register them here (or create a helper that registers all tools).
+   */
+  registerTool(explainConceptTool);
 
   await app.listen({ port: PORT, host: HOST });
   logger.info(`Server listening on http://${HOST}:${PORT}`);
