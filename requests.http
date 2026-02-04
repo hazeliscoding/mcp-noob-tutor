@@ -1,0 +1,76 @@
+### MCP Noob Tutor - HTTP Test Requests
+### Use REST Client extension to run these requests
+
+@baseUrl = http://localhost:3333
+
+### Health Check
+GET {{baseUrl}}/health
+
+### Explain Concept - HTTP
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "explain_concept",
+  "input": {
+    "concept": "HTTP"
+  }
+}
+
+### Explain Concept - HTTP (with learner context - beginner)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "explain_concept",
+  "input": {
+    "concept": "HTTP"
+  },
+  "userContext": {
+    "learnerLevel": "beginner",
+    "previousTopics": ["networks", "protocols"]
+  }
+}
+
+### Explain Concept - Closures
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "explain_concept",
+  "input": {
+    "concept": "Closures"
+  }
+}
+
+### Explain Concept - Closures (intermediate)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "explain_concept",
+  "input": {
+    "concept": "Closures"
+  },
+  "userContext": {
+    "learnerLevel": "intermediate"
+  }
+}
+
+### Test Invalid Tool Name
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "unknown_tool",
+  "input": {}
+}
+
+### Test Missing Required Input
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "explain_concept",
+  "input": {}
+}
