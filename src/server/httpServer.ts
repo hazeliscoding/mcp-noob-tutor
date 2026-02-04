@@ -2,9 +2,9 @@ import Fastify from 'fastify';
 import { registerRoutes } from './routes';
 import { registerErrorHandler } from './middleware/errorHandler';
 import { logger } from '../shared/logger';
-import { explainConceptTool } from '../mcp/tools/explainConceptTool';
 import { registerTool } from '../mcp/toolRegistry';
 import { nextTopicTool } from '../mcp/tools/nextTopic.tool';
+import { explainConceptTool } from '../mcp/tools/explainConcept.tool';
 
 /**
  * HTTP entrypoint for the tutor server.

@@ -85,6 +85,29 @@ Content-Type: application/json
   }
 }
 
+### Explain Concept - CORS
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "explain_concept",
+  "input": {
+    "concept": "CORS"
+  }
+}
+
+### Explain Concept - CORS (Hint 2)
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "explain_concept",
+  "input": {
+    "concept": "CORS",
+    "hintLevel": 2
+  }
+}
+
 ### Test Invalid Tool Name
 POST {{baseUrl}}/mcp
 Content-Type: application/json

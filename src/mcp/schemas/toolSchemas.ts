@@ -11,10 +11,12 @@ import { z } from 'zod';
  * Schema for `explain_concept` tool input.
  *
  * The user must provide a non-empty concept string.
+ * Optional `hintLevel` lets them request escalating hints (1 = definition, 2 = demo outline).
  * (We validate early so tools don't waste cycles on invalid input.)
  */
 export const explainConceptInputSchema = z.object({
   concept: z.string().min(1, 'concept is required'),
+  hintLevel: z.union([z.literal(1), z.literal(2)]).optional(),
 });
 
 /**
