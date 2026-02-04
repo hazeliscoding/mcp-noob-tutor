@@ -1,5 +1,5 @@
-import type { MCPRequest, MCPResponse } from "../shared/types";
-import { getTool } from "./toolRegistry";
+import type { MCPRequest, MCPResponse } from '../shared/types';
+import { getTool } from './toolRegistry';
 
 /**
  * Routes an incoming MCP request to a registered tool.
@@ -9,9 +9,7 @@ import { getTool } from "./toolRegistry";
  * - Keep tool implementations isolated and easy to test in-process
  * - Provide friendly failures when a tool name is unknown
  */
-export async function handleMCPRequest(
-  req: MCPRequest
-): Promise<MCPResponse> {
+export async function handleMCPRequest(req: MCPRequest): Promise<MCPResponse> {
   const tool = getTool(req.toolName);
 
   if (!tool) {
@@ -28,7 +26,7 @@ export async function handleMCPRequest(
    * Tools can assume these fields exist, even if the caller omits `userContext`.
    */
   const ctx = {
-    learnerLevel: req.userContext?.learnerLevel ?? "beginner",
+    learnerLevel: req.userContext?.learnerLevel ?? 'beginner',
     previousTopics: req.userContext?.previousTopics ?? [],
   };
 

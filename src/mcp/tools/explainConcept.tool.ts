@@ -46,8 +46,7 @@ export const explainConceptTool: MCPTool<ExplainConceptInput> = {
         `Where would "${concept}" appear in a real project?`,
         `What could go wrong if "${concept}" is misunderstood or misused?`,
       ],
-      tutorNotes:
-        'Pause here. Answer the checkpoints before asking for examples or code.',
+      tutorNotes: 'Pause here. Answer the checkpoints before asking for examples or code.',
     };
   },
 };
