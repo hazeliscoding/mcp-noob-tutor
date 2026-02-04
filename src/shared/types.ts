@@ -14,7 +14,7 @@ export type ToolName = 'explain_concept';
  * - `userContext` gives the tool a bit of learner-aware personalization
  */
 export interface MCPRequest {
-  toolName: ToolName;
+  toolName: string;
   input: unknown;
   userContext?: {
     learnerLevel?: 'beginner' | 'intermediate';

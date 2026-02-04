@@ -25,14 +25,6 @@ export const explainConceptTool: MCPTool<ExplainConceptInput> = {
   async execute(input, ctx): Promise<MCPResponse> {
     const concept = input?.concept?.trim();
 
-    if (!concept) {
-      return {
-        output: null,
-        checkpoints: [],
-        tutorNotes: 'Missing required field: concept',
-      };
-    }
-
     return {
       output: {
         concept,
