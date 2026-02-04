@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import { registerRoutes } from './routes';
 import { registerErrorHandler } from './middleware/errorHandler';
 import { logger } from '../shared/logger';
-import { explainConceptTool } from '../mcp/tools/explainConcept.tool';
+import { explainConceptTool } from '../mcp/tools/explainConceptTool';
 import { registerTool } from '../mcp/toolRegistry';
 
 /**

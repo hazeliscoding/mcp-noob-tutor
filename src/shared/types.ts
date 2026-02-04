@@ -28,9 +28,14 @@ export interface MCPRequest {
  * - `output`: tool-specific content (often an object)
  * - `checkpoints`: questions/prompts to encourage active recall
  * - `tutorNotes`: optional guidance, usually addressed to the learner
+ * - `hintLadder`: optional controlled hint escalation
  */
 export interface MCPResponse {
   output: unknown;
   checkpoints: string[];
   tutorNotes?: string;
+  hintLadder?: {
+    level: 1 | 2 | 3 | 4;
+    guidance: string;
+  };
 }
