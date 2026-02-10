@@ -108,6 +108,17 @@ Content-Type: application/json
   }
 }
 
+### Assess HTTP basics
+POST {{baseUrl}}/mcp
+Content-Type: application/json
+
+{
+  "toolName": "assess_knowledge",
+  "input": {
+    "topic": "http_basics"
+  }
+}
+
 ### Test Invalid Tool Name
 POST {{baseUrl}}/mcp
 Content-Type: application/json

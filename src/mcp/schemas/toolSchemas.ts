@@ -34,6 +34,10 @@ export const nextTopicInputSchema = z.object({
   currentTopic: z.string().optional(),
 });
 
+export const assessKnowledgeInputSchema = z.object({
+  topic: z.string().min(1),
+});
+
 /**
  * Registry of all tool input schemas.
  *
@@ -43,6 +47,7 @@ export const nextTopicInputSchema = z.object({
 export const toolInputSchemas = {
   explain_concept: explainConceptInputSchema,
   next_topic: nextTopicInputSchema,
+  assess_knowledge: assessKnowledgeInputSchema,
 } as const;
 
 /**
