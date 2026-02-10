@@ -39,6 +39,17 @@ export const assessKnowledgeInputSchema = z.object({
 });
 
 /**
+ * Schema for `analyze_assessment` tool input.
+ *
+ * Learners provide the topic they assessed and their answers to diagnostic questions.
+ * Used to analyze gaps and provide personalized recommendations.
+ */
+export const analyzeAssessmentInputSchema = z.object({
+  topic: z.string().min(1),
+  answers: z.array(z.string().min(1)),
+});
+
+/**
  * Registry of all tool input schemas.
  *
  * Add a new tool? Register its schema here.
@@ -48,6 +59,7 @@ export const toolInputSchemas = {
   explain_concept: explainConceptInputSchema,
   next_topic: nextTopicInputSchema,
   assess_knowledge: assessKnowledgeInputSchema,
+  analyze_assessment: analyzeAssessmentInputSchema,
 } as const;
 
 /**
