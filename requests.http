@@ -1,138 +1,81 @@
-### MCP Noob Tutor - HTTP Test Requests
-### Use REST Client extension to run these requests
+@host = http://127.0.0.1:3333
+@contentType = application/json
 
-@baseUrl = http://localhost:3333
+###
+# Health check
+GET {{host}}/health
 
-### Health Check
-GET {{baseUrl}}/health
-
-### Explain Concept - HTTP
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "explain_concept",
-  "input": {
-    "concept": "HTTP"
-  }
-}
-
-### Explain Concept - HTTP (with learner context - beginner)
-POST {{baseUrl}}/mcp
-Content-Type: application/json
+###
+# 1) Assess knowledge: HTTP basics
+POST {{host}}/mcp
+Content-Type: {{contentType}}
 
 {
-  "toolName": "explain_concept",
-  "input": {
-    "concept": "HTTP"
-  },
+  "toolName": "assess_knowledge",
+  "input": { "topic": "http_basics" },
   "userContext": {
     "learnerLevel": "beginner",
-    "previousTopics": ["networks", "protocols"]
-  }
-}
-
-### Explain Concept - Closures
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "explain_concept",
-  "input": {
-    "concept": "Closures"
-  }
-}
-
-### Explain Concept - Closures (intermediate)
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "explain_concept",
-  "input": {
-    "concept": "Closures"
-  },
-  "userContext": {
-    "learnerLevel": "intermediate"
-  }
-}
-
-### Next Topic - Fullstack
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "next_topic",
-  "input": {
-    "track": "fullstack"
-  },
-  "userContext": {
     "previousTopics": []
   }
 }
 
-### Next Topic - Pretend they already covered a few topics
-POST {{baseUrl}}/mcp
-Content-Type: application/json
+###
+# 2) Analyze assessment: paste your answers here after you respond to the questions above
+# Tip: keep answers short & honest, 1–2 sentences each.
+POST {{host}}/mcp
+Content-Type: {{contentType}}
+
+{
+  "toolName": "analyze_assessment",
+  "input": {
+    "topic": "http_basics",
+    "answers": [
+      "GET retrieves data, POST sends data.",
+      "404 means the resource was not found.",
+      "Headers are key/value metadata sent with the request."
+    ]
+  },
+  "userContext": {
+    "learnerLevel": "beginner",
+    "previousTopics": []
+  }
+}
+
+###
+# 3) Follow the recommendation manually:
+# If analyze_assessment recommends explain_concept, you can run it here.
+
+# Hint 1 example (definitions + mistakes)
+POST {{host}}/mcp
+Content-Type: {{contentType}}
+
+{
+  "toolName": "explain_concept",
+  "input": { "concept": "HTTP", "hintLevel": 1 },
+  "userContext": { "learnerLevel": "beginner", "previousTopics": ["http_basics"] }
+}
+
+###
+# Hint 2 example (demo outline)
+POST {{host}}/mcp
+Content-Type: {{contentType}}
+
+{
+  "toolName": "explain_concept",
+  "input": { "concept": "HTTP", "hintLevel": 2 },
+  "userContext": { "learnerLevel": "beginner", "previousTopics": ["http_basics"] }
+}
+
+###
+# 4) Next topic suggestion (fullstack track)
+POST {{host}}/mcp
+Content-Type: {{contentType}}
 
 {
   "toolName": "next_topic",
-  "input": {
-    "track": "fullstack"
-  },
+  "input": { "track": "fullstack" },
   "userContext": {
-     "previousTopics": ["internet_basics","http_basics","git_basics"]
+    "learnerLevel": "beginner",
+    "previousTopics": ["internet_basics", "http_basics", "git_basics"]
   }
-}
-
-### Explain Concept - CORS
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "explain_concept",
-  "input": {
-    "concept": "CORS"
-  }
-}
-
-### Explain Concept - CORS (Hint 2)
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "explain_concept",
-  "input": {
-    "concept": "CORS",
-    "hintLevel": 2
-  }
-}
-
-### Assess HTTP basics
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "assess_knowledge",
-  "input": {
-    "topic": "http_basics"
-  }
-}
-
-### Test Invalid Tool Name
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "unknown_tool",
-  "input": {}
-}
-
-### Test Missing Required Input
-POST {{baseUrl}}/mcp
-Content-Type: application/json
-
-{
-  "toolName": "explain_concept",
-  "input": {}
 }

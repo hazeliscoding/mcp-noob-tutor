@@ -7,7 +7,11 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server/httpServer.js",
     "format": "prettier --write \"src/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\""
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "e2e": "ts-node scripts/e2e-flow.ts",
+    "e2e:http": "TOPIC=http_basics ts-node scripts/e2e-flow.ts",
+    "e2e:cors": "TOPIC=cors_basics ts-node scripts/e2e-flow.ts",
+    "e2e:sql": "TOPIC=sql_basics ts-node scripts/e2e-flow.ts"
   },
   "keywords": [],
   "author": "",
