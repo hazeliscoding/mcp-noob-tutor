@@ -7,6 +7,7 @@ import { nextTopicTool } from '../mcp/tools/nextTopic.tool';
 import { explainConceptTool } from '../mcp/tools/explainConcept.tool';
 import { assessKnowledgeTool } from '../mcp/tools/assessKnowledge.tool';
 import { analyzeAssessmentTool } from '../mcp/tools/analyzeAssessment.tool';
+import { generatePracticeTaskTool } from '../mcp/tools/generatePracticeTask.tool';
 
 /**
  * HTTP entrypoint for the tutor server.
@@ -49,6 +50,7 @@ async function main() {
   registerTool(nextTopicTool);
   registerTool(assessKnowledgeTool);
   registerTool(analyzeAssessmentTool);
+  registerTool(generatePracticeTaskTool);
 
   await app.listen({ port: PORT, host: HOST });
   logger.info(`Server listening on http://${HOST}:${PORT}`);

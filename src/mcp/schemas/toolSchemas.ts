@@ -50,6 +50,18 @@ export const analyzeAssessmentInputSchema = z.object({
 });
 
 /**
+ * Schema for `generate_practice_task` tool input.
+ *
+ * Learners specify a topic to practice, with optional difficulty and timebox.
+ * Used to select a matching task from the practice bank for guided learning.
+ */
+export const generatePracticeTaskInputSchema = z.object({
+  topic: z.string().min(1),
+  difficulty: z.enum(['easy', 'medium']).optional(),
+  timeboxMinutes: z.union([z.literal(15), z.literal(30), z.literal(45), z.literal(60)]).optional(),
+});
+
+/**
  * Registry of all tool input schemas.
  *
  * Add a new tool? Register its schema here.
@@ -60,6 +72,7 @@ export const toolInputSchemas = {
   next_topic: nextTopicInputSchema,
   assess_knowledge: assessKnowledgeInputSchema,
   analyze_assessment: analyzeAssessmentInputSchema,
+  generate_practice_task: generatePracticeTaskInputSchema,
 } as const;
 
 /**
