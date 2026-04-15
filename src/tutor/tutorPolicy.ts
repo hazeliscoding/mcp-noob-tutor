@@ -65,14 +65,20 @@ export function applyTutorPolicy(raw: MCPResponse, ctx: TutorPolicyContext): MCP
    * Always attach a hint ladder (even if the tool didn't provide one).
    *
    * This ensures learners always know they can ask for escalating hints
-   * instead of getting stuck.
+   * instead of getting stuck. The ladder has 4 levels, each unlocked by
+   * evidence of effort at the previous level:
+   *
+   *   Level 1 — definition + why it matters + common mistakes
+   *   Level 2 — demo outline + mini exercise
+   *   Level 3 — scaffolded pseudocode with blanks (requires learnerAttempt)
+   *   Level 4 — full conceptual walkthrough (requires a real attempt >30 chars)
    */
   return {
     ...withGuardrails,
     hintLadder: withGuardrails.hintLadder ?? {
       level: 1,
       guidance:
-        'High-level guidance only. Ask for Hint 2/3 if you get stuck and share your attempt.',
+        'High-level guidance only. Hint ladder has 4 levels — escalate by sharing your attempt. Levels 3 and 4 require evidence of effort (a `learnerAttempt`).',
     },
   };
 }
@@ -158,7 +164,8 @@ function applyAntiVibeGuardrails(res: MCPResponse, ctx: TutorPolicyContext): MCP
       'This guardrail kicked in because the response looked like a large solution dump. We’ll proceed with a hint ladder instead.',
     hintLadder: {
       level: 1,
-      guidance: 'Start with a plan + checkpoints. Ask for Hint 2 with your attempt.',
+      guidance:
+        'Start with a plan + checkpoints. Hint ladder goes 1→4; each level requires more evidence of effort. Share your attempt to climb.',
     },
   };
 }

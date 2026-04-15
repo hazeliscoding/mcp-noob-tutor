@@ -10,13 +10,23 @@ import { z } from 'zod';
 /**
  * Schema for `explain_concept` tool input.
  *
- * The user must provide a non-empty concept string.
- * Optional `hintLevel` lets them request escalating hints (1 = definition, 2 = demo outline).
+ * Required:
+ * - `concept`: the topic to explain (non-empty string).
+ *
+ * Optional:
+ * - `hintLevel`: escalating hints — 1 (definition), 2 (demo outline),
+ *   3 (scaffolded pseudocode with blanks), 4 (full conceptual walkthrough).
+ *   Levels 3 and 4 are gated by `learnerAttempt` — the tutor will refuse to
+ *   escalate without evidence of effort.
+ * - `learnerAttempt`: the learner's current attempt (free-form string). Needed
+ *   to unlock levels 3-4.
+ *
  * (We validate early so tools don't waste cycles on invalid input.)
  */
 export const explainConceptInputSchema = z.object({
   concept: z.string().min(1, 'concept is required'),
-  hintLevel: z.union([z.literal(1), z.literal(2)]).optional(),
+  hintLevel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).optional(),
+  learnerAttempt: z.string().optional(),
 });
 
 /**
