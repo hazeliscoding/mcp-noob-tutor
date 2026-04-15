@@ -257,3 +257,17 @@ export function pickPracticeTask(args: {
 
   return candidates[0] ?? null;
 }
+
+/**
+ * Looks up a practice task by its stable `id`.
+ *
+ * Used by `review_submission` so learners can submit work against the same
+ * task they were given by `generate_practice_task`. Returns null when no task
+ * has that id (caller should respond with a friendly "unknown task" message).
+ *
+ * @param id - Task id (e.g., "http-echo-json")
+ * @returns The matching task, or null if no task has that id
+ */
+export function pickPracticeTaskById(id: string): PracticeTask | null {
+  return PRACTICE_BANK.find((t) => t.id === id) ?? null;
+}
