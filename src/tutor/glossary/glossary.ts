@@ -112,6 +112,150 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
       'Client logs in, receives a token, then sends Authorization: Bearer <token> on later requests.',
     miniExercise: "In one sentence: what does 'signed' mean compared to 'encrypted'?",
   },
+
+  git: {
+    concept: 'Git',
+    shortDefinition:
+      'Git is a version control system that tracks snapshots of your files as commits on branches.',
+    whyItMatters:
+      "Teams only scale when changes are reviewable, reversible, and parallelizable. Git provides all three.",
+    commonMistakes: [
+      'Committing on main directly instead of branching.',
+      'Using git add -A and accidentally committing secrets (.env, credentials).',
+      "Force-pushing to shared branches (destroys teammates' work).",
+      'Treating commits as "save" — huge commits mixing unrelated changes.',
+    ],
+    beginnerExample:
+      'Create a branch (git checkout -b feat/login), make small commits, open a PR, review, merge.',
+    miniExercise:
+      'Explain in one paragraph: what is the difference between git fetch, git pull, and git merge?',
+  },
+
+  testing: {
+    concept: 'Testing',
+    shortDefinition:
+      'Automated tests assert that your code behaves as intended, so you can change it later without fear.',
+    whyItMatters:
+      'Tests are how you prove behavior stays correct as the codebase grows. Without them, every change is a gamble.',
+    commonMistakes: [
+      'Testing implementation details (how) instead of behavior (what).',
+      'Writing only happy-path tests — no error/edge cases.',
+      'One giant E2E test instead of a pyramid of small units + a few integrations.',
+      'Mocks that are more complex than the code under test.',
+    ],
+    beginnerExample:
+      'For a function add(a, b): test(add(2,3)===5), test(add(-1,1)===0), test throws on non-numbers.',
+    miniExercise:
+      'Name the three layers of the test pyramid and which should be most numerous.',
+  },
+
+  ci_cd: {
+    concept: 'CI/CD',
+    shortDefinition:
+      'Continuous Integration runs your tests on every push; Continuous Delivery/Deployment ships passing code to users automatically.',
+    whyItMatters:
+      'CI catches regressions before they reach main; CD makes shipping boring (which is the goal).',
+    commonMistakes: [
+      'Letting the pipeline stay red for days (normalizes broken main).',
+      'Skipping tests locally because "CI will catch it".',
+      "Deploying directly from laptops instead of from the pipeline — state drifts.",
+      'No rollback strategy; a bad deploy becomes a crisis.',
+    ],
+    beginnerExample:
+      'GitHub Actions: on push → install → lint → test → build. On push to main, deploy to staging.',
+    miniExercise:
+      "What's the minimum gate that should block a PR from merging, and why?",
+  },
+
+  caching: {
+    concept: 'Caching',
+    shortDefinition:
+      'Caching stores the result of an expensive operation so the next caller can reuse it instead of recomputing.',
+    whyItMatters:
+      'Caching is the cheapest way to make slow systems feel fast — but wrong caching makes bugs hilariously hard to find.',
+    commonMistakes: [
+      "Caching data that must be fresh (stale writes wreck users' trust).",
+      'No TTL or invalidation strategy — stale forever.',
+      'Caching per-user data in a shared cache (privacy leak).',
+      'Using cache to fix a query that should have been indexed.',
+    ],
+    beginnerExample:
+      'Browser caches static JS via Cache-Control: max-age=31536000; server caches expensive DB rollups for 60 seconds.',
+    miniExercise:
+      'Name one piece of data in any app you use that MUST NOT be cached, and explain why.',
+  },
+
+  auth: {
+    concept: 'Auth',
+    shortDefinition:
+      '"Auth" is shorthand for two distinct things: authentication (who you are) and authorization (what you can do).',
+    whyItMatters:
+      'Conflating them is the root of most auth bugs. A logged-in user is not necessarily an allowed user.',
+    commonMistakes: [
+      'Using the words "auth" / "authentication" / "authorization" interchangeably.',
+      'Checking authentication but forgetting authorization (any logged-in user can hit admin routes).',
+      'Trusting the client to enforce permissions.',
+      'Storing passwords unhashed or with weak/outdated hashes.',
+    ],
+    beginnerExample:
+      'Login → authenticates (sets session/JWT). Hitting /admin/users → authorizes (is this user an admin?).',
+    miniExercise:
+      'Give one example each of an authentication failure and an authorization failure in the same app.',
+  },
+
+  api: {
+    concept: 'API',
+    shortDefinition:
+      'An API is the contract between two programs — the set of requests one side can make and the shape of the answers.',
+    whyItMatters:
+      'Every app is really a network of APIs. Understanding the contract mindset scales from a single function to distributed systems.',
+    commonMistakes: [
+      'Breaking the contract silently (removing a field, changing a type).',
+      'No versioning strategy — every change is a potential break.',
+      'Leaking internal implementation details through the API shape.',
+      'Inconsistent naming, casing, and error shapes across endpoints.',
+    ],
+    beginnerExample:
+      'A library function is a local API; a REST endpoint is a network API. Both define inputs, outputs, and errors.',
+    miniExercise:
+      'Pick an app you use. Name one operation you do there and sketch the API call(s) you imagine behind it.',
+  },
+
+  typescript: {
+    concept: 'TypeScript',
+    shortDefinition:
+      'TypeScript is JavaScript with a layer of static type annotations that the compiler checks before your code runs.',
+    whyItMatters:
+      'Types are executable documentation. They catch a whole class of bugs at compile time and make refactoring safe.',
+    commonMistakes: [
+      'Using `any` everywhere, defeating the point.',
+      'Fighting the type system with `as` casts instead of modeling the data correctly.',
+      'Treating `unknown` and `any` as the same.',
+      'Ignoring strict mode flags (`strict: true` should be table stakes).',
+    ],
+    beginnerExample:
+      'function add(a: number, b: number): number { return a + b } — call add("1", 2) fails at compile time.',
+    miniExercise:
+      "What's the practical difference between `any` and `unknown`? Which should you prefer, and why?",
+  },
+
+  async: {
+    concept: 'Async',
+    shortDefinition:
+      "Async code represents work that doesn't complete immediately — it returns a handle (Promise) you can await later.",
+    whyItMatters:
+      'I/O, timers, and network calls are all async. Misunderstanding async is the #1 source of "why is this undefined?" bugs.',
+    commonMistakes: [
+      'Forgetting await — you get a Promise object, not the value.',
+      'Mixing then/callbacks with await in the same flow.',
+      'Not handling rejections (unhandled rejection warnings at runtime).',
+      'Awaiting in a loop when Promise.all would parallelize safely.',
+    ],
+    beginnerExample:
+      "const data = await fetch(url).then(r => r.json()) — fetch returns a Promise of Response, .json() returns another Promise.",
+    miniExercise:
+      'Write pseudocode for "fetch 3 URLs in parallel, fail fast if any one fails". Which Promise helper do you use?',
+  },
 };
 
 /**

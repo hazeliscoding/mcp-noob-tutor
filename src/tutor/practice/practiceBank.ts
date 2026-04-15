@@ -232,6 +232,292 @@ export const PRACTICE_BANK: PracticeTask[] = [
       'Not understanding server must still enforce authorization.',
     ],
   },
+
+  {
+    id: 'git-branch-and-merge',
+    topic: 'git_basics',
+    title: 'Git: Design a branching exercise (paper only)',
+    timeboxMinutes: 30,
+    difficulty: 'easy',
+    goal: "Build muscle memory for feature branches, rebases, and merge commits before touching a real repo.",
+    constraints: [
+      'Paper / whiteboard only — no actual git required.',
+      'Must sketch the commit graph before and after each operation.',
+    ],
+    steps: [
+      'Draw a graph: main with commits A-B-C.',
+      'Branch `feat/x` at B. Add commits D and E on the feature branch.',
+      'Main gets a new commit F from someone else. Redraw the graph.',
+      'Show what the graph looks like after `git merge --no-ff feat/x` into main.',
+      'Redraw for the alternative: `git rebase main` on feat/x, then fast-forward merge.',
+      'Write one sentence on when you would prefer each approach.',
+    ],
+    selfChecks: [
+      'Do your graphs show the branch point and merge point clearly?',
+      'Did you show how rebase rewrites commit hashes?',
+      'Did you articulate the trade-off (linear history vs preserved context)?',
+    ],
+    rubric: [
+      {
+        criteria: 'Correct initial graph',
+        looksLike: 'Main and feature branch with shared ancestor visible',
+      },
+      {
+        criteria: 'Merge commit graph',
+        looksLike: 'merge commit with two parents; feature commits preserved',
+      },
+      {
+        criteria: 'Rebase graph',
+        looksLike: 'feature commits replayed on top of main; fast-forward merge; linear history',
+      },
+      {
+        criteria: 'Trade-off articulation',
+        looksLike: 'rebase=linear but rewrites history; merge=true record of branch lifecycle',
+      },
+    ],
+    commonPitfalls: [
+      'Treating rebase and merge as interchangeable.',
+      'Forgetting that rebase rewrites commit hashes (dangerous on shared branches).',
+      "Drawing graphs that don't distinguish branch tips from historical commits.",
+    ],
+  },
+
+  {
+    id: 'testing-pyramid-reasoning',
+    topic: 'testing_basics',
+    title: 'Testing: Reason about the test pyramid for a real feature',
+    timeboxMinutes: 15,
+    difficulty: 'easy',
+    goal: 'Apply the test pyramid to a concrete feature instead of parroting the shape.',
+    constraints: [
+      'No code required.',
+      "Pick a feature from an app you actually use — don't invent an abstract one.",
+    ],
+    steps: [
+      'State the feature in one sentence (e.g., "add item to cart").',
+      'List 3-5 unit tests you would write for this feature.',
+      'List 1-2 integration tests for this feature.',
+      'List 1 end-to-end test covering the happy path.',
+      'Justify the ratio: why more units than integrations than E2Es?',
+    ],
+    selfChecks: [
+      'Do your unit tests target pure logic (not network/DB)?',
+      'Do your integration tests cover real boundaries (two collaborators)?',
+      'Does your E2E only cover the critical user journey, not every permutation?',
+    ],
+    rubric: [
+      {
+        criteria: 'Concrete feature',
+        looksLike: 'A real user-facing flow, not an abstract "test function X"',
+      },
+      {
+        criteria: 'Correct pyramid distribution',
+        looksLike: 'most units, fewer integrations, smallest E2E footprint',
+      },
+      {
+        criteria: 'Ratio justification',
+        looksLike: 'speed, reliability, scope — units are cheap, E2Es are slow and brittle',
+      },
+    ],
+    commonPitfalls: [
+      'Making the E2E the only test ("if it works in the browser it is tested").',
+      'Writing "integration tests" that mock everything and are secretly unit tests.',
+      'Testing the framework (you do not need to test that React re-renders).',
+    ],
+  },
+
+  {
+    id: 'js-async-explain',
+    topic: 'js_fundamentals',
+    title: 'JS: Explain async/await using a concrete failure',
+    timeboxMinutes: 30,
+    difficulty: 'easy',
+    goal: 'Cement the async mental model by reasoning through a bug, not reading a tutorial.',
+    constraints: [
+      'No code required — this is a writing exercise.',
+      "Must reference a specific 'undefined' or 'Promise {}' bug you have seen (yours or a teammate's).",
+    ],
+    steps: [
+      'Describe the bug in one sentence: what was expected vs what happened.',
+      'Rewrite the buggy snippet in pseudocode, annotating each line with "sync" or "async".',
+      'Identify the exact line where the missing `await` (or misordered operation) caused the bug.',
+      'Explain what a Promise represents and why logging it shows `Promise { <pending> }` before it resolves.',
+      'Write a one-paragraph rule of thumb you will apply next time to avoid this.',
+    ],
+    selfChecks: [
+      'Did you clearly distinguish "the function returned" from "the work completed"?',
+      'Did you name the specific missing step (await, then, etc.)?',
+      'Is your rule of thumb concrete enough to apply without re-reading docs?',
+    ],
+    rubric: [
+      {
+        criteria: 'Concrete bug example',
+        looksLike: 'a specific behavior difference, not "async is confusing"',
+      },
+      {
+        criteria: 'Accurate async labelling',
+        looksLike: 'every async call marked; await placement reasoned about',
+      },
+      {
+        criteria: 'Promise state explanation',
+        looksLike: 'pending vs fulfilled vs rejected described in your own words',
+      },
+      {
+        criteria: 'Actionable rule of thumb',
+        looksLike: '"if X returns a Promise, always await or .then it" style',
+      },
+    ],
+    commonPitfalls: [
+      'Treating `async function` as "makes the code wait" — it does not; `await` does.',
+      'Believing `Promise.all` is parallelism (it awaits concurrent promises, but they run however the platform schedules them).',
+      "Forgetting that `async` functions always return a Promise, even if you `return 1`.",
+    ],
+  },
+
+  {
+    id: 'fetch-error-handling',
+    topic: 'fetch_ajax',
+    title: 'Fetch: Design error handling for a flaky API call',
+    timeboxMinutes: 30,
+    difficulty: 'easy',
+    goal: 'Handle the full surface of fetch() failures on purpose — not just the happy path.',
+    constraints: [
+      'No code required — produce a decision table.',
+      'Must cover network failure, 4xx, 5xx, and malformed JSON.',
+    ],
+    steps: [
+      'List every way a fetch() call can fail.',
+      'For each failure, write: how does fetch surface it (reject? resolve with !ok?)? ',
+      'Decide the UX for each failure (retry? show error? fall back to cached data?).',
+      'Decide what gets logged and at what severity.',
+      'Sketch one reusable wrapper function signature (pseudocode) that enforces this everywhere.',
+    ],
+    selfChecks: [
+      'Did you remember that fetch() does NOT reject on HTTP 4xx/5xx?',
+      'Did you distinguish user-actionable errors from infrastructure errors?',
+      'Does your wrapper signature force callers to handle both success and failure?',
+    ],
+    rubric: [
+      {
+        criteria: 'Complete failure taxonomy',
+        looksLike: 'network error, 4xx, 5xx, malformed body, timeout — each named',
+      },
+      {
+        criteria: 'Correct fetch semantics',
+        looksLike: 'only network errors reject; !response.ok must be checked manually',
+      },
+      {
+        criteria: 'Sensible UX decisions',
+        looksLike: 'retry on 5xx, show error on 4xx, never silently swallow errors',
+      },
+      {
+        criteria: 'Reusable wrapper signature',
+        looksLike: 'returns a discriminated union Result<T,E> or calls onError callback',
+      },
+    ],
+    commonPitfalls: [
+      'Assuming fetch() rejects on 500 (it does not — you must check response.ok).',
+      'Catching a rejection and then ignoring non-rejection failures.',
+      'Swallowing errors with empty .catch(()=>{}) blocks.',
+    ],
+  },
+
+  {
+    id: 'rest-notes-medium',
+    topic: 'api_rest_basics',
+    title: 'REST: Extend the Notes API with auth + filtering + a versioning plan',
+    timeboxMinutes: 45,
+    difficulty: 'medium',
+    goal: 'Turn a toy CRUD API into a real-world contract: auth, filtering, versioning.',
+    constraints: [
+      'No code required — produce a design doc.',
+      'Must reuse the Notes DTO from the easy version of this task.',
+      "Assume the API already has GET/POST/PATCH/DELETE for notes.",
+    ],
+    steps: [
+      'Add an authentication scheme (describe which header, what token shape).',
+      'Add authorization rules: who can read/edit which notes (ownership model).',
+      "Extend GET /notes to support ?q= search and ?tag= filtering. Define the exact semantics (AND vs OR? case-sensitive?).",
+      'Decide a versioning strategy: URL prefix (/v1) vs header. Pick one and justify.',
+      'Write a deprecation plan: if /v1 goes away, how do clients find out and migrate?',
+    ],
+    selfChecks: [
+      'Is your auth model explicit about what the server verifies on each request?',
+      'Are search/filter semantics unambiguous for a client implementer?',
+      'Does the versioning plan tell a client how to detect a deprecated endpoint?',
+    ],
+    rubric: [
+      {
+        criteria: 'Authentication detail',
+        looksLike: 'header name, token format, server verification steps specified',
+      },
+      {
+        criteria: 'Authorization rules',
+        looksLike: 'who can do what stated in terms of ownership, not just "logged in"',
+      },
+      {
+        criteria: 'Unambiguous filter semantics',
+        looksLike: 'AND/OR, case, pagination interaction all explicit',
+      },
+      {
+        criteria: 'Versioning decision + justification',
+        looksLike: 'URL vs header chosen with a concrete reason',
+      },
+      {
+        criteria: 'Deprecation plan',
+        looksLike: 'Deprecation header, sunset date, client migration steps',
+      },
+    ],
+    commonPitfalls: [
+      'Adding "auth" without specifying which header and validation.',
+      'Ambiguous filter semantics that every client implements differently.',
+      'No deprecation plan — versions pile up forever.',
+    ],
+  },
+
+  {
+    id: 'sql-join-medium',
+    topic: 'sql_basics',
+    title: 'SQL: Write 3 JOIN variants for a realistic reporting query',
+    timeboxMinutes: 45,
+    difficulty: 'medium',
+    goal: "Move beyond INNER JOIN and pick the right join type for the question you're asking.",
+    constraints: [
+      'No running DB required — write queries on paper.',
+      'Use Users(id, name, is_active) and Orders(id, user_id, total_cents, created_at).',
+    ],
+    steps: [
+      'Write a query that lists every order with the user name. What JOIN type did you pick, and why?',
+      'Write a query that lists every user and their order count, INCLUDING users with zero orders.',
+      'Write a query that lists users who have never placed an order.',
+      'For each query, state the expected number of rows given a sample dataset you design.',
+      'For each query, identify one index on either table that would likely help.',
+    ],
+    selfChecks: [
+      'Did you pick INNER vs LEFT vs anti-join deliberately?',
+      'Does your query 2 correctly include zero-order users (hint: COUNT on the right side column)?',
+      'Are your indexes justified by the WHERE/JOIN columns, not random?',
+    ],
+    rubric: [
+      {
+        criteria: 'Correct JOIN per question',
+        looksLike: 'Q1 INNER, Q2 LEFT JOIN with COUNT on order id, Q3 LEFT JOIN WHERE orders.id IS NULL',
+      },
+      {
+        criteria: 'Row-count predictions',
+        looksLike: 'plausible numbers given a designed sample; explains why',
+      },
+      {
+        criteria: 'Reasoned indexes',
+        looksLike: 'index on orders.user_id justified by join condition',
+      },
+    ],
+    commonPitfalls: [
+      'Using INNER JOIN where LEFT JOIN is needed (loses zero-order users).',
+      'COUNT(*) in a LEFT JOIN inflating counts to 1 for zero-match rows.',
+      'Adding indexes on every column "just in case".',
+    ],
+  },
 ];
 
 /**

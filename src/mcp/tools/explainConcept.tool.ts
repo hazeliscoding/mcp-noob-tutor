@@ -270,9 +270,17 @@ function gateLevel(
  * If no alias matches, return the original key (caller will check if it exists).
  */
 function guessAlias(key: string): string {
-  // small aliasing to help beginners
+  // small aliasing to help beginners who type the phrase they saw in a tutorial
   if (key === 'swagger' || key === 'openapi') return 'rest';
   if (key === 'https' || key === 'tls') return 'http';
+  if (key === 'ts' || key === 'type-script') return 'typescript';
+  if (key === 'cicd' || key === 'ci/cd' || key === 'ci-cd') return 'ci_cd';
+  if (key === 'promise' || key === 'promises' || key === 'await') return 'async';
+  if (key === 'authn' || key === 'authz' || key === 'authentication' || key === 'authorization')
+    return 'auth';
+  if (key === 'cache' || key === 'cdn') return 'caching';
+  if (key === 'test' || key === 'tests' || key === 'unit test') return 'testing';
+  if (key === 'version control' || key === 'github') return 'git';
   return key;
 }
 

@@ -91,4 +91,89 @@ export const DIAGNOSTICS: Partial<Record<TopicId, DiagnosticSet>> = {
       },
     ],
   },
+
+  js_fundamentals: {
+    topic: 'js_fundamentals',
+    questions: [
+      {
+        question:
+          'What is the difference between == and === in JavaScript, and which should you usually prefer?',
+        whatItTests: 'Type coercion awareness',
+      },
+      {
+        question: 'What does `await` do when you use it inside an async function?',
+        whatItTests: 'Async mental model',
+      },
+      {
+        question:
+          'Why does `const arr = [1,2,3]; arr.push(4)` not cause a "cannot assign to const" error?',
+        whatItTests: 'Reference vs value semantics',
+      },
+    ],
+  },
+
+  git_basics: {
+    topic: 'git_basics',
+    questions: [
+      {
+        question: 'What is the difference between git fetch and git pull?',
+        whatItTests: 'Remote vs local state distinction',
+      },
+      {
+        question: 'Why is force-pushing to a shared branch dangerous?',
+        whatItTests: 'History-mutation awareness',
+      },
+      {
+        question: 'What does a merge commit represent that a fast-forward merge does not?',
+        whatItTests: 'Branching model understanding',
+      },
+    ],
+  },
+
+  testing_basics: {
+    topic: 'testing_basics',
+    questions: [
+      {
+        question: 'Describe the test pyramid. Which layer should have the most tests, and why?',
+        whatItTests: 'Test strategy literacy',
+      },
+      {
+        question: 'What is the difference between a unit test and an integration test?',
+        whatItTests: 'Scope vocabulary',
+      },
+    ],
+  },
+
+  security_basics: {
+    topic: 'security_basics',
+    questions: [
+      {
+        question: 'Name one input you must validate on the server even if the client already did.',
+        whatItTests: 'Trust boundary understanding',
+      },
+      {
+        question:
+          'What does "least privilege" mean, and how would you apply it to a service account?',
+        whatItTests: 'Security mindset',
+      },
+    ],
+  },
+
+  fetch_ajax: {
+    topic: 'fetch_ajax',
+    questions: [
+      {
+        question: 'When a fetch() returns, is it already resolved with the JSON body?',
+        whatItTests: 'Promise + stream model',
+      },
+      {
+        question: 'If a server returns 500, does fetch() reject or resolve? Why?',
+        whatItTests: 'Error-handling contract',
+      },
+      {
+        question: 'What header tells the server you are sending JSON, and why does it matter?',
+        whatItTests: 'Content-Type literacy',
+      },
+    ],
+  },
 };
