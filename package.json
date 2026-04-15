@@ -2,10 +2,15 @@
   "name": "mcp-noob-tutor",
   "version": "0.1.0",
   "main": "dist/index.js",
+  "bin": {
+    "mcp-noob-tutor": "dist/mcp/stdioEntry.js"
+  },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server/httpServer.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server/httpServer.js",
+    "mcp:stdio": "ts-node src/mcp/stdioEntry.ts",
+    "mcp:stdio:build": "node dist/mcp/stdioEntry.js",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
     "e2e": "ts-node scripts/e2e-flow.ts",
@@ -15,9 +20,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
+  "description": "Socratic MCP tutor server for new coders — teaches instead of dumping solutions.",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "fastify": "^5.7.4",
     "zod": "^4.3.6"
   },

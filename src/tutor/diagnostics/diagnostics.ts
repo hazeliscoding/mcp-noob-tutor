@@ -10,7 +10,14 @@ export interface DiagnosticSet {
   questions: DiagnosticQuestion[];
 }
 
-export const DIAGNOSTICS: Record<TopicId, DiagnosticSet> = {
+/**
+ * Diagnostic sets keyed by TopicId.
+ *
+ * Sparse by design: not every topic has diagnostics yet. Consumers (like the
+ * `assess_knowledge` tool) handle the missing-topic case by returning a
+ * fallback response.
+ */
+export const DIAGNOSTICS: Partial<Record<TopicId, DiagnosticSet>> = {
   http_basics: {
     topic: 'http_basics',
     questions: [
