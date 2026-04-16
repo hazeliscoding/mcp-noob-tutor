@@ -5,3 +5,8 @@ dist
 # Local Claude assistant context (do not push)
 CLAUDE.md
 .claude/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
